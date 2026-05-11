@@ -1,0 +1,53 @@
+{
+  "name": "Asli - Campus Platform",
+  "short_name": "Asli",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#FAFAFA",
+  "theme_color": "#D97706",
+  "description": "Campus engagement platform for Andhra University students",
+  "orientation": "portrait-primary",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "icons/Icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/Icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/Icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/Icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [],
+  "categories": ["education", "social", "lifestyle"],
+  "shortcuts": [
+    {
+      "name": "Chat with Asli",
+      "short_name": "Chat",
+      "description": "Ask campus questions",
+      "url": "/?screen=chat",
+      "icons": [{ "src": "icons/Icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Campus Feed",
+      "short_name": "Feed",
+      "description": "View CollX feed",
+      "url": "/?screen=collx",
+      "icons": [{ "src": "icons/Icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
