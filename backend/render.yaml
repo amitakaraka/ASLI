@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: asli-backend
+    env: python
+    buildCommand: "python -m pip install -r requirements.txt"
+    startCommand: "alembic upgrade head && gunicorn --worker-class eventlet -w 1 wsgi:app --bind 0.0.0.0:$PORT"
+    plan: free
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.0"
+      - key: FLASK_ENV
+        value: "production"
+      - key: ASLI_ENV
+        value: "production"
+      - key: SECRET_KEY
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: ASLI_CORS_ORIGINS
+        sync: false
+      - key: ASLI_AUTO_MIGRATE
+        value: "0"
+      - key: ASLI_SEED_DEMO_DATA
+        value: "0"
