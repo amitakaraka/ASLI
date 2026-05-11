@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5001"
+    environment:
+      - FLASK_ENV=production
+      - ASLI_ENV=production
+      - FLASK_DEBUG=0
+      - SECRET_KEY=${SECRET_KEY:?Set SECRET_KEY before running docker compose}
+      - JWT_SECRET=${JWT_SECRET:?Set JWT_SECRET before running docker compose}
+      - ASLI_CORS_ORIGINS=${ASLI_CORS_ORIGINS:?Set ASLI_CORS_ORIGINS before running docker compose}
+      - REDIS_URL=redis://redis:6379
+      - DATABASE_URL=sqlite:///asli.db
+      - ASLI_AUTO_MIGRATE=${ASLI_AUTO_MIGRATE:-0}
+      - ASLI_SEED_DEMO_DATA=${ASLI_SEED_DEMO_DATA:-0}
+    depends_on:
+      - redis
+    restart: unless-stopped
+    networks:
+      - asli-network
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    networks:
+      - asli-network
+    command: redis-server --appendonly yes
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - static_files:/usr/share/nginx/html:ro
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - asli-network
+
+volumes:
+  redis_data:
+  static_files:
+
+networks:
+  asli-network:
+    driver: bridge
